@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static %}
+{% load bootstrap4 %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Tytuł strony{% endblock %}</title>
+    {%  bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+{% bootstrap_javascript jquery='full' %}
+<body>
+
+    {% if user.is_authenticated %}
+    <aside>
+        <nav class="sidebar">
+            <ul>
+                <li><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                <li><a class="nav-link" href="{% url 'car_data' %}">Informacje o samochodach (DTL)</a></li>
+                <li><a class="nav-link" href="{% url 'dodaj_silnik' %}">Dodaj silnik do bazy</a></li>
+                <li><a class="nav-link" href="{% url 'dodaj_model_samochodu' %}">Dodaj model do bazy</a></li>
+                <li><a class="nav-link" href="{% url 'dodaj_samochod' %}">Dodaj samochod do bazy</a></li>
+                <li><a class="nav-link" href="{% url 'index' %}">Edycja bazy</a></li>
+                <li><a class="nav-link" href="{% url 'show_data' %}">Wyswietl bazę danych</a></li>
+            </ul>
+        </nav>
+    </aside>
+    {% endif %}
+
+    <main>
+        {% block content %}
+        <!-- Tu umieść blok zawartości, który będzie dziedziczony w innych szablonach -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        Adrian Hajkowski 2023
+    </footer>
+</body>
+</html>

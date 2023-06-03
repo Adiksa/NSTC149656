@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% block title %}
+    Witamy
+{% endblock %}
+
+{% block content %}
+    <div class="topbar">
+        {% if user.is_authenticated %}
+            <p>Witaj, {{ user.username }}!</p>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Wyloguj się</button>
+            </form>
+        {% else %}
+            <p>Nie jesteś zalogowany.</p>
+        {% endif %}
+    </div>
+
+    <div class="container">
+        <h1>Witamy na stronie powitalnej</h1>
+        <img src="{% static 'images/welcome_image.jpg' %}" alt="Witamy" class="welcome-image">
+        <p>Liczba zarejestrowanych silników: {{ liczba_silnikow }}</p>
+        <p>Liczba zarejestrowanych modeli samochodów: {{ liczba_modeli_samochodow }}</p>
+        <p>Liczba zarejestrowanych samochodów: {{ liczba_samochodow }}</p>
+
+
+    </div>
+{% endblock %}

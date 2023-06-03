@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Dane samochodów
+{% endblock %}
+
+{% block content %}
+    <h1>Silniki:</h1>
+    <ul>
+        {% for silnik in silniki %}
+            <li>{{ silnik.oznaczenie }}</li>
+        {% endfor %}
+    </ul>
+
+    <h1>Modele samochodów:</h1>
+    <ul>
+        {% for model in modele %}
+            <li>{{ model.model }}</li>
+        {% endfor %}
+    </ul>
+
+    <h1>Samochody:</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Tablica rejestracyjna</th>
+                <th>Kolor</th>
+                <th>Rok produkcji</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for samochod in samochody %}
+                <tr>
+                    <td>{{ samochod.tablica_rejestracyjna }}</td>
+                    <td>{{ samochod.kolor }}</td>
+                    <td>{{ samochod.rok_produkcji }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

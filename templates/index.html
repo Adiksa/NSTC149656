@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Witamy
+{% endblock %}
+
+{% block content %}
+<h1>Index</h1>
+
+    <form method="post" action="{% url 'index' %}">
+        {% csrf_token %}
+        <label for="model">Wybierz model:</label>
+        <select name="model" id="model">
+            <option value="silnik" {% if selected_model == 'silnik' %}selected{% endif %}>Silniki</option>
+            <option value="model_samochodu" {% if selected_model == 'model_samochodu' %}selected{% endif %}>Modele Samochodów</option>
+            <option value="samochod" {% if selected_model == 'samochod' %}selected{% endif %}>Samochody</option>
+        </select>
+        <input type="submit" value="Wybierz">
+    </form>
+
+    {% if selected_model == 'silnik' %}
+        <h2>Silniki</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Oznaczenie</th>
+                    <th>Pojemność</th>
+                    <th>Moc</th>
+                    <th>Waga</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for silnik in silniki %}
+                <tr>
+                    <td>{{ silnik.oznaczenie }}</td>
+                    <td>{{ silnik.pojemnosc }}</td>
+                    <td>{{ silnik.moc }}</td>
+                    <td>{{ silnik.waga }}</td>
+                    <td>
+                        <a href="{% url 'edit' 'silnik' silnik.id %}">Edytuj</a>
+                        <a href="{% url 'delete' 'silnik' silnik.id %}">Usuń</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Dodaj nowy silnik</h3>
+        <form method="post" action="{% url 'index' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Dodaj">
+        </form>
+    {% elif selected_model == 'model_samochodu' %}
+        <h2>Modele Samochodów</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Rodzaj</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for model_samochodu in modele_samochodow %}
+                <tr>
+                    <td>{{ model_samochodu.model }}</td>
+                    <td>{{ model_samochodu.get_rodzaj_display }}</td>
+                    <td>
+                        <a href="{% url 'edit' 'model_samochodu' model_samochodu.id %}">Edytuj</a>
+                        <a href="{% url 'delete' 'model_samochodu' model_samochodu.id %}">Usuń</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Dodaj nowy model samochodu</h3>
+        <form method="post" action="{% url 'index' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Dodaj">
+        </form>
+    {% elif selected_model == 'samochod' %}
+        <h2>Samochody</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tablica rejestracyjna</th>
+                    <th>Kolor</th>
+                    <th>Rok produkcji</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for samochod in samochody %}
+                <tr>
+                    <td>{{ samochod.tablica_rejestracyjna }}</td>
+                    <td>{{ samochod.kolor }}</td>
+                    <td>{{ samochod.rok_produkcji }}</td>
+                    <td>
+                        <a href="{% url 'edit' 'samochod' samochod.id %}">Edytuj</a>
+                        <a href="{% url 'delete' 'samochod' samochod.id %}">Usuń</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Dodaj nowy samochód</h3>
+        <form method="post" action="{% url 'index' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Dodaj">
+        </form>
+    {% endif %}
+
+{% endblock %}
